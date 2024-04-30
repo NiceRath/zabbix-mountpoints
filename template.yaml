@@ -12,13 +12,13 @@ zabbix_export:
       discovery_rules:
         - uuid: 7b061f7b1075447482cf348e0f5cd4ca
           name: 'Remote Mountpoint Discovery'
-          key: 'nice.mounts[discover]'
+          key: 'netmount[discover]'
           delay: 1d
           lifetime: 7d
           item_prototypes:
             - uuid: 1639497f8a364192bb8834bc8b1d4437
               name: 'Mountpoint {#MOUNT_DST} Readable'
-              key: 'nice.mounts[read,{#MOUNT_DST}]'
+              key: 'netmount[read,{#MOUNT_DST}]'
               delay: 5m
               history: 7d
               trends: '0'
@@ -26,15 +26,15 @@ zabbix_export:
                 name: Yes/No
               trigger_prototypes:
                 - uuid: 83c01930ad824f07b2cd747ac25e615c
-                  expression: 'last(/Template Network-Mounts/nice.mounts[read,{#MOUNT_DST}])=0'
+                  expression: 'last(/Template Network-Mounts/netmount[read,{#MOUNT_DST}])=0'
                   name: 'Mountpoint {#MOUNT_DST} NOT Readable'
                   priority: AVERAGE
                   dependencies:
                     - name: 'Mountpoint {#MOUNT_DST} NOT Mounted'
-                      expression: 'last(/Template Network-Mounts/nice.mounts[up,{#MOUNT_DST}])=0'
+                      expression: 'last(/Template Network-Mounts/netmount[up,{#MOUNT_DST}])=0'
             - uuid: 61df6212439a43d89da1ee8be4859f31
               name: 'Mountpoint {#MOUNT_DST} UP'
-              key: 'nice.mounts[up,{#MOUNT_DST}]'
+              key: 'netmount[up,{#MOUNT_DST}]'
               delay: 5m
               history: 7d
               trends: '0'
@@ -42,12 +42,12 @@ zabbix_export:
                 name: Yes/No
               trigger_prototypes:
                 - uuid: 1a8ccac7ce1e405387d18f95419c2766
-                  expression: 'last(/Template Network-Mounts/nice.mounts[up,{#MOUNT_DST}])=0'
+                  expression: 'last(/Template Network-Mounts/netmount[up,{#MOUNT_DST}])=0'
                   name: 'Mountpoint {#MOUNT_DST} NOT Mounted'
                   priority: HIGH
             - uuid: fb29b71d20f244329109603bc61ba3f4
               name: 'Mountpoint {#MOUNT_DST} Writable'
-              key: 'nice.mounts[write,{#MOUNT_DST}]'
+              key: 'netmount[write,{#MOUNT_DST}]'
               delay: 5m
               history: 7d
               trends: '0'
@@ -57,14 +57,14 @@ zabbix_export:
                 name: Yes/No
               trigger_prototypes:
                 - uuid: d40a87cd894c4d7387f44adf3db46060
-                  expression: 'last(/Template Network-Mounts/nice.mounts[write,{#MOUNT_DST}])=0'
+                  expression: 'last(/Template Network-Mounts/netmount[write,{#MOUNT_DST}])=0'
                   name: 'Mountpoint {#MOUNT_DST} NOT Writable'
                   status: DISABLED
                   discover: NO_DISCOVER
                   priority: AVERAGE
                   dependencies:
                     - name: 'Mountpoint {#MOUNT_DST} NOT Mounted'
-                      expression: 'last(/Template Network-Mounts/nice.mounts[up,{#MOUNT_DST}])=0'
+                      expression: 'last(/Template Network-Mounts/netmount[up,{#MOUNT_DST}])=0'
       valuemaps:
         - uuid: be2b0e26e36a4f37921e885d174d0d17
           name: Yes/No
