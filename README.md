@@ -17,7 +17,7 @@ On the target system:
 root@SRV1:~$ su zabbix --login --shell /bin/bash
 
 zabbix@SRV1:~$ python3 /usr/local/bin/zabbix/mounts.py discover
-> {"data": [{"{#MOUNT_SRC}": "<REMOTE>:/test", "{#MOUNT_DST}": "/mnt/test/nfs"}, {"{#MOUNT_SRC}": "//<REMOTE>/test", "{#MOUNT_DST}": "/mnt/smb/test"}]}
+> {"data": [{"{#MOUNT_SRC}": "<REMOTE>:/test", "{#MOUNT_DST}": "/mnt/test/nfs"}, {"{#MOUNT_SRC}": "//<REMOTE>/test", "{#MOUNT_DST}": "/mnt/test/smb"}]}
 
 zabbix@SRV1:~$ python3 /usr/local/bin/zabbix/mounts.py up /mnt/test/nfs
 > 1
