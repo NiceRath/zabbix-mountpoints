@@ -36,12 +36,13 @@ except (ValueError, IndexError):
 if CHECK == 'discover':
     result = {'data': []}
 
-    stdout, _ = subprocess_popen(
+    with subprocess_popen(
         [f"cat /etc/fstab | grep -E '{DISCOVER_REGEX}' | grep -v 'noauto' | cut -d ' ' -f-2"],
         shell=True,
         stdout=subprocess_pipe,
         stderr=subprocess_pipe,
-    ).communicate()
+    ) as ps:
+        stdout, _ = ps.communicate()
 
     for line in stdout.decode('utf-8').split('\n'):
         try:
@@ -58,12 +59,13 @@ else:
         print('NO MOUNTPOINT PROVIDED')
         sys_exit(1)
 
-    stdout, _ = subprocess_popen(
+    with subprocess_popen(
         [f"mount | grep -c '{MOUNTPOINT}'"],
         shell=True,
         stdout=subprocess_pipe,
         stderr=subprocess_pipe,
-    ).communicate()
+    ) as ps:
+        stdout, _ = ps.communicate()
 
     try:
         if stdout.decode('utf-8').strip() == '0':
@@ -82,7 +84,7 @@ else:
 
         elif CHECK == 'write':
             testfile = f'{MOUNTPOINT}/.zbx_{time()}.txt'
-            with open(testfile, 'w') as f:
+            with open(testfile, 'w', encoding='utf-8') as f:
                 f.write('test')
 
             remove_file(testfile)
@@ -93,3 +95,4 @@ else:
         sys_exit(1)
 
 sys_exit(0)
+
